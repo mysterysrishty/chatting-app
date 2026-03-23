@@ -1,0 +1,55 @@
+.LogoSearch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* 🔥 Brand (logo + name) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand img {
+  width: 40px;
+  height: 40px;
+}
+
+.brand span {
+  font-weight: bold;
+  font-size: 18px;
+  color: #6C63FF;
+}
+
+/* 🔍 Search box */
+.Search {
+  display: flex;
+  align-items: center;
+  background: #f1f3f5;
+  border-radius: 10px;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.Search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+
+/* 🔥 Search icon */
+.s-icon {
+  background: #6C63FF;
+  border-radius: 8px;
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.s-icon:hover {
+  background: #554ee0;
+}
