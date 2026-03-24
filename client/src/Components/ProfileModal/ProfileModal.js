@@ -19,7 +19,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
   const dispatch = useDispatch();
   const param = useParams();
 
-  const { user } = useSelector((state) => state.authReducer.authData);
+  
 
 
   const handleChange = (e) => {

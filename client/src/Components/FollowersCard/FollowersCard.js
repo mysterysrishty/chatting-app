@@ -27,13 +27,12 @@ const FollowersCard = () => {
     <div className='FollowersCard'>
       <h3>People you may know...</h3>
 
-      {persons.map((person, id) => {
-
-        if (person._id !== user._id) {
-          return <UserFollow person={person} key={id} />
-        }
-
-      })}
+      {persons
+  .filter((person) => person._id !== user._id)
+  .map((person, id) => (
+    <UserFollow person={person} key={id} />
+  ))
+}
 
     </div>
   )
