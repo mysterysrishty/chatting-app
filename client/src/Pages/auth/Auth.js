@@ -19,16 +19,23 @@ const Auth = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-
     const handlSubmit = (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (isSignUp) {
-            data.password === data.confirmpass ? dispatch(signUp(data)) : setConfirmPass(false)
+    if (isSignUp) {
+        if (data.password === data.confirmpass) {
+
+            // 🔥 remove confirmpass
+            const { confirmpass, ...cleanData } = data;
+
+            dispatch(signUp(cleanData));
         } else {
-            dispatch(logIn(data))
+            setConfirmPass(false);
         }
+    } else {
+        dispatch(logIn(data));
     }
+  }
 
 
 
