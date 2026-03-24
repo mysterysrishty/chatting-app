@@ -15,7 +15,7 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(getTimelinePosts(user._id))
-  }, [])
+  }, [dispatch, user._id])
 
 
   if (params.id) {
@@ -26,9 +26,9 @@ const Posts = () => {
     <div className='Posts'>
 
       {loading ? "Fetching Posts..." :
-        posts.map((post, id) => {
-          return <Post data={post} id={id} />
-        })}
+        posts.map((post, id) => (
+           <Post data={post} id={id} />
+        ))}
 
     </div>
   )

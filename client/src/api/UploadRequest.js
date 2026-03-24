@@ -1,6 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API = axios.create({ baseURL: 'http://localhost:4000' });
+// ✅ create API instance
+const API = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
-export const uploadImage = (data) => API.post('/upload/', data);
-export const uploadPost = (data) => API.post('/post', data);
+// ✅ upload image
+export const uploadImage = (data) => {
+  return API.post("/upload", data);
+};
+
+// ✅ upload post
+export const uploadPost = (data) => {
+  return API.post("/post", data);
+};
