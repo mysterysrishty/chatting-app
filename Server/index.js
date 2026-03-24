@@ -3,23 +3,28 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import http from 'http';                 
-import { Server } from 'socket.io';    
+import http from 'http';
+import { Server } from 'socket.io';
 
 import AuthRoute from './Routes/AuthRoute.js';
 import UserRoute from './Routes/UserRoute.js';
 import PostRoute from './Routes/PostRoute.js';
 import UploadRoute from './Routes/UploadRoute.js';
 
+dotenv.config();
+
 const app = express();
+
+// ✅ IMPORTANT: fallback port
+const PORT = process.env.PORT || 5000;
 
 // ⭐ CREATE HTTP SERVER
 const server = http.createServer(app);
 
-// ⭐ SOCKET SETUP
+// ⭐ SOCKET SETUP (FIXED CORS)
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // your frontend
+    origin: "*", // allow all (for now)
   },
 });
 
@@ -49,22 +54,24 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-dotenv.config();
-
 // Routes
 app.use('/auth', AuthRoute);
 app.use('/user', UserRoute);
 app.use('/post', PostRoute);
 app.use('/upload', UploadRoute);
 
+// ⭐ DEBUG LOG
+console.log("Starting server...");
+
 // ⭐ CONNECT DB + START SERVER
-mongoose.connect(
-  process.env.MONGO_DB,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-)
-.then(() => {
-  server.listen(process.env.PORT, () => {   // ⭐ IMPORTANT CHANGE
-    console.log(`Server running on port ${process.env.PORT}`);
+mongoose.connect(process.env.MONGO_DB)
+  .then(() => {
+    console.log("MongoDB connected ✅");
+
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("MongoDB error ❌", error);
   });
-})
-.catch((error) => console.log(error));
