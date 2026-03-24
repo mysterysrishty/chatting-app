@@ -9,13 +9,11 @@ import ShareModal from '../ShareModal/ShareModal';
 import { Link } from 'react-router-dom';
 
 const RightSide = () => {
-
   const [modalOpened, setModalOpened] = useState(false);
 
   return (
     <div className='RightSide'>
       <div className="navIcons">
-
         <Link to='/home'>
           <img src={Home} alt="" />
         </Link>
@@ -32,10 +30,8 @@ const RightSide = () => {
       </div>
 
       <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
-
-      {/* optional */}
-      <button>💬 Chat</button>
-
     </div>
-  )
-}
+  );
+};
+
+export default RightSide;
