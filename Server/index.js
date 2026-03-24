@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve("./.env") });
+
 
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import http from 'http';
 import { Server } from 'socket.io';
 
@@ -12,7 +15,7 @@ import UserRoute from './Routes/UserRoute.js';
 import PostRoute from './Routes/PostRoute.js';
 import UploadRoute from './Routes/UploadRoute.js';
 
-dotenv.config();
+
 
 const app = express();
 
@@ -65,7 +68,7 @@ app.use('/upload', UploadRoute);
 console.log("Starting server...");
 
 // ⭐ CONNECT DB + START SERVER
-mongoose.connect(process.env.MONGO_DB)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected ✅");
 
@@ -76,3 +79,9 @@ mongoose.connect(process.env.MONGO_DB)
   .catch((error) => {
     console.log("MongoDB error ❌", error);
   });
+  
+  console.log("Mongo URI:", process.env.MONGO_URI);
+  
+  
+ 
+

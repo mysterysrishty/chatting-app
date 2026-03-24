@@ -9,12 +9,11 @@ export const registerUser = async (req, res) => {
     const { email, password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
-    let pass = password.toString();
-    const hashedPass = await bcrypt.hash(pass, parseInt(salt));
+    const hashedPass = await bcrypt.hash(password, salt);
+
     req.body.password = hashedPass;
 
     const newUser = new UserModel(req.body);
-
 
     try {
 
@@ -26,9 +25,13 @@ export const registerUser = async (req, res) => {
 
         const user = await newUser.save();
 
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_KEY);
+        const token = jwt.sign(
+          { email: user.email, id: user._id },
+          process.env.JWT_SECRET // ⚠️ ALSO FIX THIS (see below)
+        );
 
         res.status(200).json({ user, token });
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
