@@ -10,6 +10,7 @@ import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
 
+
 import AuthRoute from './Routes/AuthRoute.js';
 import UserRoute from './Routes/UserRoute.js';
 import PostRoute from './Routes/PostRoute.js';
@@ -19,6 +20,12 @@ import UploadRoute from './Routes/UploadRoute.js';
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.json({
+    status: "success",
+    message: "Backend is running 🚀"
+  });
+});
 // ✅ IMPORTANT: fallback port
 const PORT = process.env.PORT || 5000;
 
@@ -79,6 +86,14 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.log("MongoDB error ❌", error);
   });
+  dotenv.config();
+
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI is missing");
+  process.exit(1);
+}
+
+mongoose.connect(process.env.MONGO_URI)
   
   console.log("Mongo URI:", process.env.MONGO_URI);
   
