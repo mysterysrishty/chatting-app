@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
 
         const token = jwt.sign(
           { email: user.email, id: user._id },
-          process.env.JWT_SECRET // ⚠️ ALSO FIX THIS (see below)
+          process.env.JWT_KEY
         );
 
         res.status(200).json({ user, token });
@@ -44,21 +44,26 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await UserModel.findOne({ email: email });
+        const user = await UserModel.findOne({ email });
 
         if (user) {
-            const validity = await bcrypt.compare(password, user.password)
+            const validity = await bcrypt.compare(password, user.password);
 
             if (!validity) {
-                res.status(400).json("Soory, Please enter the correct email or password!");
+                return res.status(400).json("Sorry, Please enter correct email or password!");
             } else {
-                const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_KEY);
-                res.status(200).json({ user, token });
+                const token = jwt.sign(
+                    { email: user.email, id: user._id },
+                    process.env.JWT_KEY // ✅ FIXED
+                );
+
+                return res.status(200).json({ user, token });
             }
         } else {
-            res.status(404).json("Soory, Please enter the correct email or password!")
+            return res.status(404).json("Sorry, Please enter correct email or password!");
         }
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        console.log(error); // 🔥 add this for debugging
+        res.status(500).json({ message: error.message });
     }
-}
+};
