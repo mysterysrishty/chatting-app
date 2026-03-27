@@ -13,8 +13,10 @@ const Posts = () => {
   const { posts, loading } = useSelector((state) => state.postReducer);
 
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id));
-  }, [dispatch, user._id]);
+    if (user?._id) {
+      dispatch(getTimelinePosts(user._id));
+    }
+  }, [dispatch, user?._id]);
 
   const filteredPosts = params.id
     ? posts.filter((post) => post.userId === params.id)
@@ -25,13 +27,16 @@ const Posts = () => {
       <div className="Posts">
 
         {loading ? (
-          <p>Fetching Posts...</p>
+          <p className="statusText">Loading posts...</p>
         ) : filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => (
-            <Post data={post} key={post._id} />
-          ))
+          filteredPosts
+            .slice()                // ✅ copy array
+            .reverse()              // ✅ latest post first (Instagram style)
+            .map((post) => (
+              <Post data={post} key={post._id} />
+            ))
         ) : (
-          <p>No posts yet</p>
+          <p className="statusText">No posts yet 😔</p>
         )}
 
       </div>

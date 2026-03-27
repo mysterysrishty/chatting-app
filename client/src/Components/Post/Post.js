@@ -15,7 +15,6 @@ const Post = ({ data }) => {
   );
   const [likes, setLikes] = useState(data?.likes?.length || 0);
 
-  // ✅ Backend image base URL
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleLike = () => {
@@ -30,39 +29,47 @@ const Post = ({ data }) => {
   return (
     <div className="Post">
 
-      {/* ✅ FIXED IMAGE */}
-      <img
-        src={
-          data?.image
-            ? serverPublic + data.image
-            : serverPublic + "defaultPost.jpg"
-        }
-        alt="post"
-        className="postImg"
-        onError={(e) => {
-          e.target.src = serverPublic + "defaultPost.jpg";
-        }}
-      />
+      {/* 🔹 TOP SECTION (PROFILE + NAME) */}
+      <div className="postTop">
+        <div className="postTopLeft">
+          <img
+            src={serverPublic + "defaultProfile.png"}
+            alt=""
+            className="postProfileImg"
+          />
+          <span className="postUsername">{data?.name}</span>
+        </div>
+      </div>
 
-      {/* ✅ REACTIONS */}
+      {/* 🔹 IMAGE */}
+      {data?.image && (
+        <img
+          src={serverPublic + data.image}
+          alt="post"
+          className="postImg"
+          onError={(e) => {
+            e.target.src = serverPublic + "defaultPost.jpg";
+          }}
+        />
+      )}
+
+      {/* 🔹 ACTIONS */}
       <div className="postActions">
         <img
           src={liked ? Like : Notlike}
           alt="like"
           onClick={handleLike}
-          style={{ cursor: "pointer" }}
         />
         <img src={Comment} alt="comment" />
         <img src={Share} alt="share" />
       </div>
 
-      {/* ✅ LIKES */}
+      {/* 🔹 LIKES */}
       <span className="likes">{likes} likes</span>
 
-      {/* ✅ DESCRIPTION */}
+      {/* 🔹 CAPTION */}
       <div className="caption">
-        <span><b>{data?.name}</b></span>
-        <span>{data?.desc}</span>
+        <b>{data?.name}</b> {data?.desc}
       </div>
 
     </div>
