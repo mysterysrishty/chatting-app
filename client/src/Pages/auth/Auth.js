@@ -9,7 +9,11 @@ const Auth = () => {
   const [confirmPass, setConfirmPass] = useState(true);
 
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.authReducer.loading);
+
+  // ✅ Safe loading access
+  const loading = useSelector(
+    (state) => state?.authReducer?.loading
+  );
 
   const [data, setData] = useState({
     firstname: "",
@@ -19,13 +23,21 @@ const Auth = () => {
     confirmpass: "",
   });
 
+  // ✅ Handle input change
   const handleChange = (e) => {
-    setConfirmPass(true); // reset error on typing
+    setConfirmPass(true);
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  // ✅ Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 🔥 Basic validation
+    if (!data.email || !data.password) {
+      alert("Please fill all required fields");
+      return;
+    }
 
     if (isSignUp) {
       if (data.password !== data.confirmpass) {
@@ -36,10 +48,15 @@ const Auth = () => {
       const { confirmpass, ...cleanData } = data;
       dispatch(signUp(cleanData));
     } else {
-      dispatch(logIn({ email: data.email, password: data.password }));
+      const loginData = {
+        email: data.email,
+        password: data.password,
+      };
+      dispatch(logIn(loginData));
     }
   };
 
+  // ✅ Reset form
   const resetForm = () => {
     setConfirmPass(true);
     setData({
@@ -53,23 +70,22 @@ const Auth = () => {
 
   return (
     <div className="Auth">
-      {/* Left Side */}
-      <div className="a-left">
-        <img src={Logo} alt="logo" />
-        <div className="Webname">
-          <h2>Welcome!</h2>
-          <h6>Explore ideas throughout the world.</h6>
-        </div>
-      </div>
+      <div className="auth-container">
 
-      {/* Right Side */}
-      <div className="a-right">
-        <form className="infoForm authForm" onSubmit={handleSubmit}>
+        {/* 🔹 Top Section */}
+        <div className="auth-left">
+          <img src={Logo} alt="logo" />
+          <h2>Welcome!</h2>
+          <p>Explore ideas throughout the world.</p>
+        </div>
+
+        {/* 🔹 Form */}
+        <form className="infoForm" onSubmit={handleSubmit}>
           <h2>{isSignUp ? "Sign Up" : "Log In"}</h2>
 
           {/* Name Fields */}
           {isSignUp && (
-            <div>
+            <div className="inputRow">
               <input
                 type="text"
                 placeholder="First Name"
@@ -105,7 +121,7 @@ const Auth = () => {
           </div>
 
           {/* Password */}
-          <div>
+          <div className="inputRow">
             <input
               type="password"
               placeholder="Password"
@@ -129,27 +145,26 @@ const Auth = () => {
             )}
           </div>
 
-          {/* Error Message */}
+          {/* Error */}
           {!confirmPass && (
             <span className="error-text">
-              * Passwords do not match
+              Passwords do not match
             </span>
           )}
 
-          {/* Switch Auth Mode */}
-          <div>
-            <span
-              className="auth-toggle"
-              onClick={() => {
-                setIsSignUp((prev) => !prev);
-                resetForm();
-              }}
-            >
-              {isSignUp
-                ? "Already have an account? Login"
-                : "Don't have an account? Sign Up"}
-            </span>
-          </div>
+          {/* Toggle */}
+          <span
+            className="auth-toggle"
+            onClick={() => {
+              setIsSignUp((prev) => !prev);
+              resetForm();
+              setConfirmPass(true);
+            }}
+          >
+            {isSignUp
+              ? "Already have an account? Login"
+              : "Don't have an account? Sign Up"}
+          </span>
 
           {/* Button */}
           <button

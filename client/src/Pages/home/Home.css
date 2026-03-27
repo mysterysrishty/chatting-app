@@ -1,9 +1,18 @@
 .Home {
-  position: relative;
   display: grid;
-  grid-template-columns: 18rem auto 20rem;
+  grid-template-columns: 18rem 1fr 20rem;
   gap: 1rem;
   width: 100%;
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Ensure children don’t shrink */
+.left-side,
+.main-side,
+.right-side {
+  min-width: 0;
 }
 
 /* ========================= */
@@ -11,7 +20,7 @@
 /* ========================= */
 @media (max-width: 1024px) {
   .Home {
-    grid-template-columns: 16rem auto;
+    grid-template-columns: 16rem 1fr;
   }
 
   .right-side {
@@ -43,5 +52,6 @@
 @media (max-width: 480px) {
   .Home {
     gap: 0.5rem;
+    padding: 0.5rem;
   }
 }
