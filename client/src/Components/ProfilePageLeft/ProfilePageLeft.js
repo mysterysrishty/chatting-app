@@ -6,12 +6,25 @@ import FollowersCard from '../FollowersCard/FollowersCard';
 
 const ProfilePageLeft = () => {
   return (
-    <div className='ProfilePageLeft'>
-       <LogoSearch />
-       <InfoCard />
-       <FollowersCard />
-    </div>
-  )
-}
+    <aside className="ProfilePageLeft">
 
-export default ProfilePageLeft
+      {/* 🔍 Logo + Search */}
+      <section className="leftSection">
+        <LogoSearch />
+      </section>
+
+      {/* 👤 Profile Info */}
+      <section className="leftSection">
+        <InfoCard />
+      </section>
+
+      {/* 👥 Followers */}
+      <section className="leftSection">
+        <FollowersCard />
+      </section>
+
+    </aside>
+  );
+};
+
+export default ProfilePageLeft;

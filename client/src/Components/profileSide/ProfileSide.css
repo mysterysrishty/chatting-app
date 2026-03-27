@@ -1,7 +1,21 @@
-.ProfileSide{
+.ProfileSide {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    overflow: auto;
+    gap: 16px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Each child full width */
+.ProfileSide > * {
+    width: 100%;
+}
+
+/* Sticky sidebar (desktop only) */
+@media (min-width: 768px) {
+    .ProfileSide {
+        position: sticky;
+        top: 10px;
+        height: fit-content;
+    }
 }

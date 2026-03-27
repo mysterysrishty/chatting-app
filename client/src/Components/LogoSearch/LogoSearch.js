@@ -1,11 +1,18 @@
-import React from 'react'
-import './LogoSearch.css'
+import React, { useState } from 'react';
+import './LogoSearch.css';
 import Logo from '../../Img/logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 
 const LogoSearch = () => {
+  const [query, setQuery] = useState("");
+
+  const handleSearch = () => {
+    console.log("Search:", query);
+    // later you can connect API here
+  };
+
   return (
-    <div className='LogoSearch'>
+    <div className="LogoSearch">
 
       {/* Logo + Name */}
       <div className="brand">
@@ -15,15 +22,20 @@ const LogoSearch = () => {
 
       {/* Search Box */}
       <div className="Search">
-        <input type="text" placeholder='Search people or posts...' />
+        <input
+          type="text"
+          placeholder="Search people or posts..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
 
-        <div className="s-icon">
+        <div className="s-icon" onClick={handleSearch}>
           <SearchIcon />
         </div>
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default LogoSearch
+export default LogoSearch;

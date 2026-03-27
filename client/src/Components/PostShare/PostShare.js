@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react';
 import './PostShare.css';
 import PhotoOutlinedIcon from '@mui/icons-material/PhotoOutlined';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
@@ -8,118 +8,141 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadImage, uploadPost } from '../../actions/UploadAction';
 
-
-
 const PostShare = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.authReducer.authData);
+  const loading = useSelector((state) => state.postReducer.uploading);
 
-    const loading = useSelector((state) => state.postReducer.uploading)
-    const [image, setImage] = useState(null);
-    const imageRef = useRef();
-    const dispatch = useDispatch();
-    const desc = useRef();
-    const { user } = useSelector((state) => state.authReducer.authData);
-    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [image, setImage] = useState(null);
+  const imageRef = useRef();
+  const desc = useRef();
 
+  // ✅ FIXED backend URL
+  const serverPublic = "https://your-backend-url/uploads/";
 
-    const onImageChange = (event) => {
-        if (event.target.files && event.target.files[0]) {
-            let img = event.target.files[0];
-            setImage(img);
-        }
+  // 📸 Handle Image Selection
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
     }
+  };
 
+  // 🔄 Reset form
+  const reset = () => {
+    setImage(null);
+    desc.current.value = "";
+  };
 
+  // 🚀 Submit Post
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    if (!desc.current.value && !image) return;
 
-    const reset = () => {
-        setImage(null);
-        desc.current.value = ""
+    const newPost = {
+      userId: user._id,
+      desc: desc.current.value,
+    };
+
+    try {
+      if (image) {
+        const data = new FormData();
+        const filename = Date.now() + "_" + image.name;
+
+        data.append("name", filename);
+        data.append("file", image);
+
+        newPost.image = filename;
+
+        await dispatch(uploadImage(data));
+      }
+
+      await dispatch(uploadPost(newPost));
+      reset();
+
+    } catch (err) {
+      console.log("Upload error:", err);
     }
+  };
 
+  return (
+    <div className="PostShare">
 
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const newPost = {
-            userId: user._id,
-            desc: desc.current.value,
+      {/* 👤 Profile Image */}
+      <img
+        src={
+          user.profilePicture
+            ? serverPublic + user.profilePicture
+            : "/defaultProfile.png"
         }
+        alt=""
+        onError={(e) => (e.target.src = "/defaultProfile.png")}
+      />
 
-        if (image) {
-            const data = new FormData();
-            const filename = Date.now() + image.name;
-            data.append("name", filename);
-            data.append("file", image);
+      <div>
+        {/* ✍️ Input */}
+        <input
+          type="text"
+          placeholder="Write a caption..."
+          ref={desc}
+        />
 
-            newPost.image = filename;
+        {/* ⚙️ Options */}
+        <div className="postOptions">
 
-            try {
-                dispatch(uploadImage(data))
-            } catch (error) {
-                console.log(error)
-            }
-        }
+          <div
+            className="option"
+            style={{ color: "var(--photo)" }}
+            onClick={() => imageRef.current.click()}
+          >
+            <PhotoOutlinedIcon />
+            Photo
+          </div>
 
-        dispatch(uploadPost(newPost))
-        reset()
-    }
+          <div className="option" style={{ color: "var(--video)" }}>
+            <PlayCircleOutlineIcon />
+            Video
+          </div>
 
-    return (
-        <div className="PostShare">
-            <img src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
+          <div className="option" style={{ color: "var(--location)" }}>
+            <LocationOnOutlinedIcon />
+            Location
+          </div>
 
-            <div>
-                <input type="text" placeholder='Write a caption...' required ref={desc} />
+          <div className="option" style={{ color: "var(--shedule)" }}>
+            <CalendarMonthOutlinedIcon />
+            Schedule
+          </div>
 
-                <div className="postOptions">
+          {/* 🚀 Share Button */}
+          <button
+            className="ps-button"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? "Uploading..." : "Share"}
+          </button>
 
-                    <div className="option" style={{ color: "var(--photo)" }}
-                        onClick={() => imageRef.current.click()}
-                    >
-                        <PhotoOutlinedIcon />
-                        Photo
-                    </div>
-
-                    <div className="option" style={{ color: "var(--video)" }}>
-                        <PlayCircleOutlineIcon />
-                        Video
-                    </div>
-                    <div className="option" style={{ color: "var(--location)" }}>
-                        <LocationOnOutlinedIcon />
-                        Location
-                    </div>
-                    <div className="option" style={{ color: "var(--shedule)" }}>
-                        <CalendarMonthOutlinedIcon />
-                        Shedule
-                    </div>
-
-                    <button className='button ps-button' onClick={handleSubmit} disabled={loading}>
-                        {loading ? "uploading..." : "Share"}
-                    </button>
-
-                    <div style={{ display: "none" }}>
-                        <input
-                            type="file"
-                            name='myImage'
-                            ref={imageRef}
-                            onChange={onImageChange}
-                        />
-                    </div>
-                </div>
-
-
-                {image && (
-                    <div className="previewImage">
-                        <CloseOutlinedIcon onClick={() => setImage(null)} />
-                        <img src={URL.createObjectURL(image)} alt="" />
-                    </div>
-                )}
-
-            </div>
+          {/* 📁 Hidden File Input */}
+          <input
+            type="file"
+            ref={imageRef}
+            onChange={onImageChange}
+            accept="image/*"
+            style={{ display: "none" }}
+          />
         </div>
-    )
-}
 
-export default PostShare
+        {/* 🖼 Preview */}
+        {image && (
+          <div className="previewImage">
+            <CloseOutlinedIcon onClick={() => setImage(null)} />
+            <img src={URL.createObjectURL(image)} alt="" />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default PostShare;

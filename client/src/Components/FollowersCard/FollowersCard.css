@@ -1,42 +1,76 @@
-.FollowersCard{
+.FollowersCard {
     width: 100%;
-    border-radius: 0.7rem;
+    border-radius: 16px;
+    padding: 16px;
     gap: 1rem;
     display: flex;
     flex-direction: column;
-    font-size: 15px;
+    font-size: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-.follower{
+/* Each follower row */
+.follower {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    transition: 0.3s ease;
 }
 
-.follower > div{
+.follower:hover {
+    background: #f5f6fa;
+}
+
+/* Left section */
+.follower > div {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    align-items: center;
 }
 
-.followerImg{
-    width: 3.2rem;
-    height: 3.2rem;
+/* Profile Image */
+.followerImg {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
-.name{
+/* Name section */
+.name {
     display: flex;
     flex-direction: column;
-    align-items: self-start;
     justify-content: center;
 }
 
-.name > span:nth-of-type(1){
-    font-weight: bold;
+/* Username */
+.name > span:nth-of-type(1) {
+    font-weight: 600;
+    font-size: 14px;
 }
 
-.fc-button{
-    height: 2rem;
-    padding-left: 15px;
-    padding-right: 15px;
+/* Handle / secondary text */
+.name > span:nth-of-type(2) {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Follow Button */
+.fc-button {
+    height: 32px;
+    padding: 0 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #6a5af9, #d66efd);
+    color: white;
+    transition: 0.3s ease;
+}
+
+.fc-button:hover {
+    transform: scale(1.05);
 }

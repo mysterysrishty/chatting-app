@@ -28,11 +28,18 @@ function loadFromLocalStorage() {
         return undefined;
     }
 }
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 const persistedState = loadFromLocalStorage();
 
 const store = createStore(reducers, persistedState, composeEnhancers(applyMiddleware(thunk)));
 
-store.subscribe(() => saveToLocalStorage(store.getState()));
+store.subscribe(() => {
+  saveToLocalStorage({
+    authReducer: store.getState().authReducer
+  });
+});
 
 export default store;

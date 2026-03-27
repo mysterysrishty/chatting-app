@@ -1,23 +1,43 @@
-.TrendCard{
+.TrendCard {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background-color: var(--cardColor);
-    padding: 1rem;
-    border-radius: 1rem;
-    padding-left: 2rem;
+    gap: 14px;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
 }
 
-.trend{
+/* Hover effect */
+.TrendCard:hover {
+    transform: translateY(-3px);
+}
+
+/* Each trend item */
+.trend {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 10px;
+    transition: 0.3s;
 }
 
-.trend > span:nth-of-type(1){
-    font-weight: bold;
+/* Hover effect on trend */
+.trend:hover {
+    background: #f5f6fa;
+    cursor: pointer;
 }
 
-.trend > span:nth-of-type(2){
-    font-size: 15px;
+/* Hashtag / title */
+.trend span:nth-of-type(1) {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Posts count */
+.trend span:nth-of-type(2) {
+    font-size: 12px;
+    color: #777;
 }

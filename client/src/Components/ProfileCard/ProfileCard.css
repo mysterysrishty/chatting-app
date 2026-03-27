@@ -1,94 +1,171 @@
 .ProfileCard {
-    border-radius: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    gap: 1rem;
-    background: var(--cardColor);
-    overflow-x: clip;   
+  border-radius: 16px;
+  background: #ffffff;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
 }
 
+.ProfileCard:hover {
+  transform: translateY(-3px);
+}
+
+/* ========================= */
+/* 🖼️ COVER + PROFILE IMAGE */
+/* ========================= */
 .ProfileImages {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  position: relative;
 }
 
-.ProfileImages>img:nth-of-type(1) {
-    width: 100%;
+.ProfileImages > img:first-child {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
 }
 
-.ProfileImages>img:nth-of-type(2) {
-    width: 6rem;
-    border-radius: 50%;
-    position: absolute;
-    bottom: -3rem;
-    box-shadow: var(--profileShadow);
+.ProfileImages > img:last-child {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid white;
+  object-fit: cover;
 }
 
+/* ========================= */
+/* 👤 NAME SECTION */
+/* ========================= */
 .ProfileName {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3rem;
-    gap: 10px;
+  margin-top: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
-.ProfileName>span:nth-of-type(1) {
-    font-weight: bold;
+.ProfileName span:first-child {
+  font-weight: 600;
+  font-size: 16px;
 }
 
+.ProfileName span:last-child {
+  color: #777;
+  font-size: 13px;
+}
 
+/* ========================= */
+/* 📊 FOLLOW STATUS */
+/* ========================= */
 .followStatus {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 12px;
 }
 
 .followStatus > hr {
-    width: 85%;
-    border: 1px solid gray;
+  width: 85%;
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 8px auto;
 }
 
 .followStatus > div {
-    display: flex;
-    gap: 1rem;
-    width: 80%;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .follow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.follow > :nth-of-type(1) {
-    font-weight: bold;
+.follow span:first-child {
+  font-weight: 600;
+  font-size: 14px;
 }
 
-.follow > :nth-of-type(2) {
-    color: black;
-    font-size: 15px;
+.follow span:last-child {
+  color: #777;
+  font-size: 12px;
 }
 
-.vl { 
-    border: 1px solid gray;  
-    height: 50px;
+/* Divider */
+.vl {
+  height: 35px;
+  border-left: 1px solid #ddd;
 }
 
-
+/* ========================= */
+/* 🔗 PROFILE LINK */
+/* ========================= */
 .ProfileCard > span {
-    font-weight: bold;
-    color: var(--purplePain);
-    align-self: center;
-    margin-bottom: 1rem;
-    cursor: pointer;
+  text-align: center;
+  color: #6a5af9;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.ProfileCard > span:hover {
+  text-decoration: underline;
+}
+
+/* ========================= */
+/* 📱 MOBILE RESPONSIVE */
+/* ========================= */
+@media (max-width: 768px) {
+  .ProfileImages > img:first-child {
+    height: 130px;
+  }
+
+  .ProfileImages > img:last-child {
+    width: 70px;
+    height: 70px;
+    bottom: -35px;
+  }
+
+  .ProfileName {
+    margin-top: 45px;
+  }
+
+  .followStatus > div {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .vl {
+    display: none;
+  }
+}
+
+/* ========================= */
+/* 📱 SMALL MOBILE */
+/* ========================= */
+@media (max-width: 480px) {
+  .ProfileImages > img:first-child {
+    height: 100px;
+  }
+
+  .ProfileImages > img:last-child {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ProfileName span:first-child {
+    font-size: 14px;
+  }
+
+  .ProfileName span:last-child {
+    font-size: 12px;
+  }
 }

@@ -1,28 +1,56 @@
-.RightSide{
+.RightSide {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 20px;
+    width: 100%;
+    max-width: 300px;
 }
 
-.navIcons{
-    margin-top: 1rem;
+/* 🔝 Top icons */
+.navIcons {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.navIcons > img {
-    width: 1.5rem;
-    height: 1.5rem;
+/* Icons */
+.navIcons img {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.navIcons > a > img {
-    width: 2rem;
-    height: 2rem;
+/* Bigger profile/home icon */
+.navIcons a img {
+    width: 28px;
+    height: 28px;
 }
 
-.rg-button{
-    height: 3rem;
-    width: 80%;
-    align-self: center;
+/* Hover effect */
+.navIcons img:hover {
+    transform: scale(1.15);
 }
 
+/* 🔘 Button */
+.rg-button {
+    height: 42px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(45deg, #6a5af9, #d66efd);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover */
+.rg-button:hover {
+    transform: translateY(-2px);
+}

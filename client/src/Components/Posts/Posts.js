@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import './Posts.css';
 import Post from '../Post/Post';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,32 +6,37 @@ import { getTimelinePosts } from '../../actions/PostAction';
 import { useParams } from 'react-router-dom';
 
 const Posts = () => {
-
   const params = useParams();
-  const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.authReducer.authData)
-  let { posts, loading } = useSelector((state) => state.postReducer)
+  const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.authReducer.authData);
+  const { posts, loading } = useSelector((state) => state.postReducer);
 
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id))
-  }, [dispatch, user._id])
+    dispatch(getTimelinePosts(user._id));
+  }, [dispatch, user._id]);
 
-
-  if (params.id) {
-    posts = posts.filter((post) => post.userId === params.id)
-  }
+  const filteredPosts = params.id
+    ? posts.filter((post) => post.userId === params.id)
+    : posts;
 
   return (
-    <div className='Posts'>
+    <div className="Posts-wrapper">
+      <div className="Posts">
 
-      {loading ? "Fetching Posts..." :
-        posts.map((post, id) => (
-           <Post data={post} id={id} />
-        ))}
+        {loading ? (
+          <p>Fetching Posts...</p>
+        ) : filteredPosts.length > 0 ? (
+          filteredPosts.map((post) => (
+            <Post data={post} key={post._id} />
+          ))
+        ) : (
+          <p>No posts yet</p>
+        )}
 
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;

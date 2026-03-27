@@ -1,7 +1,22 @@
-.ProfilePageLeft{
+.ProfilePageLeft {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
     align-items: center;
-    overflow: auto;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Sticky sidebar (pro feature) */
+.ProfilePageLeft > * {
+    width: 100%;
+}
+
+/* Optional: make it sticky */
+@media (min-width: 768px) {
+    .ProfilePageLeft {
+        position: sticky;
+        top: 10px;
+        height: fit-content;
+    }
 }

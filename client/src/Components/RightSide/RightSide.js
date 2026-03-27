@@ -12,25 +12,39 @@ const RightSide = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
   return (
-    <div className='RightSide'>
+    <aside className="RightSide">
+
+      {/* 🔝 Navigation Icons */}
       <div className="navIcons">
-        <Link to='/home'>
-          <img src={Home} alt="" />
+        <Link to="/home">
+          <img src={Home} alt="home" />
         </Link>
 
-        <SettingsOutlinedIcon />
-        <img src={Noti} alt="" />
-        <img src={Comment} alt="" />
+        <SettingsOutlinedIcon className="icon" />
+        <img src={Noti} alt="notifications" />
+        <img src={Comment} alt="comments" />
       </div>
 
-      <TrendCard />
+      {/* 🔥 Trends */}
+      <section className="rightSection">
+        <TrendCard />
+      </section>
 
-      <div className="button rg-button" onClick={() => setModalOpened(true)}>
+      {/* 🚀 Share Button */}
+      <button
+        className="rg-button"
+        onClick={() => setModalOpened(true)}
+      >
         Share
-      </div>
+      </button>
 
-      <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
-    </div>
+      {/* 📤 Modal */}
+      <ShareModal
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+      />
+
+    </aside>
   );
 };
 

@@ -5,22 +5,25 @@ import ProfileCard from '../../Components/ProfileCard/ProfileCard';
 import PostSide from '../../Components/PostSide/PostSide';
 import RightSide from '../../Components/RightSide/RightSide';
 
-
 const Profile = () => {
   return (
     <div className='Profile'>
-      <ProfilePageLeft />
+
+      <div className="left-side">
+        <ProfilePageLeft />
+      </div>
 
       <div className="ProfilePage-Center">
         <ProfileCard location="profilePage" />
         <PostSide />
       </div>
 
-
-      <RightSide />
+      <div className="right-side">
+        <RightSide />
+      </div>
 
     </div>
   )
 }
 
-export default Profile
+export default Profile;
