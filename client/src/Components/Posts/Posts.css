@@ -1,5 +1,6 @@
 .Posts {
     display: flex;
+    max-width: 500px; 
     flex-direction: column;
     gap: 20px;
     width: 100%;
@@ -7,8 +8,8 @@
 
 /* Center posts like Instagram feed */
 .Posts-wrapper {
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 
