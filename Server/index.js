@@ -57,8 +57,9 @@ io.on("connection", (socket) => {
 });
 
 // Static files
-app.use(express.static('public'));
-app.use('/images', express.static('images'));
+
+
+app.use("/images", express.static(path.join(process.cwd(), "public/images")));
 
 // Middleware
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
