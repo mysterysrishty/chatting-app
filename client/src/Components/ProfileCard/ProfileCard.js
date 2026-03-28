@@ -34,7 +34,7 @@ const ProfileCard = ({ location }) => {
               : "/defaultProfile.png"
           }
           alt=""
-          onError={(e) => (e.target.src = "/defaultProfile.png")}
+          onError={(e) => (e.target.src = "/Img/defaultProfile.png")}
         />
       </div>
 

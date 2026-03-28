@@ -8,23 +8,50 @@ import { Link } from 'react-router-dom';
 const RightSide = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
-    <aside className="RightSide">
+    <aside className="RightSide" aria-label="Right sidebar">
 
       {/* 🔝 Navigation Icons */}
       <div className="navIcons">
+
+        {/* 🏠 Home */}
         <Link to="/home">
-          <img src="/Img/home.png" alt="home" />
+          <img
+            src={serverPublic + "home.png"}
+            alt="home"
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
+          />
         </Link>
 
+        {/* ⚙️ Settings */}
         <SettingsOutlinedIcon className="icon" />
 
-        <img src="/Img/noti.png" alt="notifications" />
-        <img src="/Img/comment.png" alt="comments" />
+        {/* 🔔 Notifications */}
+        <img
+          src={serverPublic + "noti.png"}
+          alt="notifications"
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
+
+        {/* 💬 Comments */}
+        <img
+          src={serverPublic + "comment.png"}
+          alt="comments"
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
+
       </div>
 
       {/* 🔥 Trends */}
-      <section className="rightSection">
+      <section className="rightSection" aria-label="Trending topics">
         <TrendCard />
       </section>
 
@@ -36,7 +63,7 @@ const RightSide = () => {
         Share
       </button>
 
-      {/* 📤 Modal */}
+      {/* 📤 Share Modal */}
       <ShareModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}

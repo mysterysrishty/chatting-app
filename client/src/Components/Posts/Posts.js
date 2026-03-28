@@ -10,16 +10,21 @@ const Posts = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.authReducer.authData);
-  const { posts, loading } = useSelector((state) => state.postReducer);
+  const { posts = [], loading } = useSelector((state) => state.postReducer);
 
+  // 🔄 Fetch posts
   useEffect(() => {
     if (user?._id) {
       dispatch(getTimelinePosts(user._id));
     }
   }, [dispatch, user?._id]);
 
+  // ❌ Safety: if no user
+  if (!user) return null;
+
+  // 👤 Filter posts for profile page
   const filteredPosts = params.id
-    ? posts.filter((post) => post.userId === params.id)
+    ? posts.filter((post) => post.userId?.toString() === params.id?.toString())
     : posts;
 
   return (
@@ -28,13 +33,15 @@ const Posts = () => {
 
         {loading ? (
           <p className="statusText">Loading posts...</p>
+
         ) : filteredPosts.length > 0 ? (
           filteredPosts
-            .slice()                // ✅ copy array
-            .reverse()              // ✅ latest post first (Instagram style)
+            .slice()   // copy array
+            .reverse() // latest first
             .map((post) => (
               <Post data={post} key={post._id} />
             ))
+
         ) : (
           <p className="statusText">No posts yet 😔</p>
         )}

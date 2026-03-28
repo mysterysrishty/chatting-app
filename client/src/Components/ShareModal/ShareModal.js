@@ -1,7 +1,7 @@
 import { Modal, useMantineTheme } from '@mantine/core';
 import PostShare from '../PostShare/PostShare';
 
-function ShareModal({ modalOpened, setModalOpened }) {
+function ShareModal({ modalOpened = false, setModalOpened }) {
   const theme = useMantineTheme();
 
   return (
@@ -11,6 +11,8 @@ function ShareModal({ modalOpened, setModalOpened }) {
       size="lg"
       centered
       radius="md"
+      title="Create a Post"   // ✅ better UX
+      aria-label="Create post modal"
       overlayProps={{
         color:
           theme.colorScheme === 'dark'
@@ -22,7 +24,6 @@ function ShareModal({ modalOpened, setModalOpened }) {
     >
       {/* 📝 Modal Content */}
       <div style={{ padding: "10px" }}>
-        <h3 style={{ marginBottom: "10px" }}>Create a Post</h3>
         <PostShare />
       </div>
     </Modal>

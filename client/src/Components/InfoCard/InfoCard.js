@@ -9,7 +9,8 @@ import { logOut } from '../../actions/AuthAction';
 
 const InfoCard = () => {
   const [modalOpened, setModalOpened] = useState(false);
-  const [profileUser, setProfileUser] = useState({});
+  const [profileUser, setProfileUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -17,34 +18,50 @@ const InfoCard = () => {
 
   const { user } = useSelector((state) => state.authReducer.authData);
 
+  // 🔄 Fetch user data
   useEffect(() => {
     const fetchProfileUser = async () => {
       try {
-        if (profileUserId?.toString() === user._id?.toString()) {
+        setLoading(true);
+
+        if (profileUserId?.toString() === user?._id?.toString()) {
           setProfileUser(user);
         } else {
           const { data } = await UserApi.getUser(profileUserId);
           setProfileUser(data);
         }
+
       } catch (err) {
         console.log("Error fetching profile:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchProfileUser();
+    if (user) fetchProfileUser();
   }, [user, profileUserId]);
 
+  // 🚪 Logout
   const handleLogOut = () => {
     dispatch(logOut());
   };
 
+  // ⏳ Loading UI
+  if (loading) {
+    return <div className="InfoCard">Loading...</div>;
+  }
+
+  if (!profileUser) return null;
+
   return (
     <div className="InfoCard">
 
+      {/* 🔹 Header */}
       <div className="infoHead">
         <h4>Profile Info</h4>
 
-        {user._id === profileUserId && (
+        {/* ✏️ Edit only for own profile */}
+        {user?._id === profileUserId && (
           <div>
             <EditIcon
               style={{ cursor: "pointer" }}
@@ -60,24 +77,28 @@ const InfoCard = () => {
         )}
       </div>
 
+      {/* 🔹 Info Fields */}
       <div className="info">
         <span>Status</span>
-        <span>{profileUser?.relationship || "Not added"}</span>
+        <span>{profileUser.relationship || "Not added"}</span>
       </div>
 
       <div className="info">
         <span>Lives in</span>
-        <span>{profileUser?.livesin || "Not added"}</span>
+        <span>{profileUser.livesin || "Not added"}</span>
       </div>
 
       <div className="info">
         <span>Works at</span>
-        <span>{profileUser?.worksAt || "Not added"}</span>
+        <span>{profileUser.worksAt || "Not added"}</span>
       </div>
 
-      <button className="logout-button" onClick={handleLogOut}>
-        Log Out
-      </button>
+      {/* 🔹 Logout */}
+      {user?._id === profileUserId && (
+        <button className="logout-button" onClick={handleLogOut}>
+          Log Out
+        </button>
+      )}
 
     </div>
   );

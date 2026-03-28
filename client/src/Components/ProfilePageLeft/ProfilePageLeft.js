@@ -6,20 +6,20 @@ import FollowersCard from '../FollowersCard/FollowersCard';
 
 const ProfilePageLeft = () => {
   return (
-    <aside className="ProfilePageLeft">
+    <aside className="ProfilePageLeft" aria-label="Profile sidebar">
 
       {/* 🔍 Logo + Search */}
-      <section className="leftSection">
+      <section className="leftSection" aria-label="Search section">
         <LogoSearch />
       </section>
 
       {/* 👤 Profile Info */}
-      <section className="leftSection">
+      <section className="leftSection" aria-label="User information">
         <InfoCard />
       </section>
 
       {/* 👥 Followers */}
-      <section className="leftSection">
+      <section className="leftSection" aria-label="Followers suggestions">
         <FollowersCard />
       </section>
 

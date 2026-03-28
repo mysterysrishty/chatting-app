@@ -17,10 +17,12 @@ const PostShare = () => {
   const imageRef = useRef();
   const desc = useRef();
 
-  // ✅ FIXED backend URL
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  // 📸 Handle Image Selection
+  // ✅ Prevent crash if user not loaded
+  if (!user) return null;
+
+  // 📁 Handle image selection
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -33,7 +35,7 @@ const PostShare = () => {
     desc.current.value = "";
   };
 
-  // 🚀 Submit Post
+  // 🚀 Submit post
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -68,19 +70,18 @@ const PostShare = () => {
   return (
     <div className="PostShare">
 
-      {/* 👤 Profile Image */}
+      {/* 👤 PROFILE IMAGE (FIXED) */}
       <img
-        src={
-          user.profilePicture
-            ? serverPublic + user.profilePicture
-            : "/defaultProfile.png"
-        }
-        alt=""
-        onError={(e) => (e.target.src = "/defaultProfile.png")}
+        src={serverPublic + (user.profilePicture || "defaultProfile.png")}
+        alt="profile"
+        onError={(e) => {
+          e.target.src = serverPublic + "defaultProfile.png";
+        }}
       />
 
       <div>
-        {/* ✍️ Input */}
+
+        {/* ✍️ Caption Input */}
         <input
           type="text"
           placeholder="Write a caption..."
@@ -133,13 +134,14 @@ const PostShare = () => {
           />
         </div>
 
-        {/* 🖼 Preview */}
+        {/* 🖼 Image Preview */}
         {image && (
           <div className="previewImage">
             <CloseOutlinedIcon onClick={() => setImage(null)} />
-            <img src={URL.createObjectURL(image)} alt="" />
+            <img src={URL.createObjectURL(image)} alt="preview" />
           </div>
         )}
+
       </div>
     </div>
   );

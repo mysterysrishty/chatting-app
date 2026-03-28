@@ -10,41 +10,46 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
   const dispatch = useDispatch();
   const param = useParams();
 
-  // remove password from data
-  const { password, ...other } = data;
+  // ✅ Remove password safely
+  const { password, ...other } = data || {};
 
-  const [formData, setFormData] = useState(other);
+  const [formData, setFormData] = useState(other || {});
   const [profileImage, setProfileImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🧠 Handle input change
+  // 🔹 Handle input change
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
-  // 📸 Handle image selection
+  // 🔹 Handle image selection
   const onImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-      if (e.target.name === "profileImage") {
-        setProfileImage(file);
-      } else {
-        setCoverImage(file);
-      }
+    if (e.target.name === "profileImage") {
+      setProfileImage(file);
+    } else {
+      setCoverImage(file);
     }
   };
 
-  // 🚀 Submit form
+  // 🔹 Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!param?.id) return;
+
     setLoading(true);
 
     let userData = { ...formData };
 
     try {
-      // Upload profile image
+      // ✅ Upload profile image
       if (profileImage) {
         const data = new FormData();
         const fileName = Date.now() + "_" + profileImage.name;
@@ -57,7 +62,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
         await dispatch(uploadImage(data));
       }
 
-      // Upload cover image
+      // ✅ Upload cover image
       if (coverImage) {
         const data = new FormData();
         const fileName = Date.now() + "_" + coverImage.name;
@@ -70,16 +75,16 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
         await dispatch(uploadImage(data));
       }
 
-      // Update user
+      // ✅ Update user
       await dispatch(updateUser(param.id, userData));
 
       setModalOpened(false);
 
     } catch (error) {
       console.log("Update error:", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -100,14 +105,14 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
 
         <h3>Update Your Info</h3>
 
-        {/* Name */}
+        {/* 🔹 Name */}
         <div>
           <input
             type="text"
             placeholder="First Name"
             className="infoInput"
             name="firstname"
-            value={formData.firstname}
+            value={formData.firstname || ""}
             onChange={handleChange}
           />
           <input
@@ -115,31 +120,31 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
             placeholder="Last Name"
             className="infoInput"
             name="lastname"
-            value={formData.lastname}
+            value={formData.lastname || ""}
             onChange={handleChange}
           />
         </div>
 
-        {/* Work */}
+        {/* 🔹 Work */}
         <div>
           <input
             type="text"
             placeholder="Works At"
             className="infoInput"
             name="worksAt"
-            value={formData.worksAt}
+            value={formData.worksAt || ""}
             onChange={handleChange}
           />
         </div>
 
-        {/* Location */}
+        {/* 🔹 Location */}
         <div>
           <input
             type="text"
             placeholder="Lives in"
             className="infoInput"
             name="livesin"
-            value={formData.livesin}
+            value={formData.livesin || ""}
             onChange={handleChange}
           />
           <input
@@ -147,24 +152,24 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
             placeholder="Country"
             className="infoInput"
             name="country"
-            value={formData.country}
+            value={formData.country || ""}
             onChange={handleChange}
           />
         </div>
 
-        {/* Relationship */}
+        {/* 🔹 Relationship */}
         <div>
           <input
             type="text"
             placeholder="Relationship Status"
             className="infoInput"
             name="relationship"
-            value={formData.relationship}
+            value={formData.relationship || ""}
             onChange={handleChange}
           />
         </div>
 
-        {/* Images */}
+        {/* 🔹 Image Upload */}
         <div>
           <h5>Profile Image</h5>
           <input
@@ -183,7 +188,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
           />
         </div>
 
-        {/* Submit */}
+        {/* 🔹 Submit */}
         <button
           className="button infoButton"
           type="submit"
