@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Auth.css";
-import Logo from "../../Img/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../../actions/AuthAction.js";
 
@@ -10,7 +9,6 @@ const Auth = () => {
 
   const dispatch = useDispatch();
 
-  // ✅ Safe loading access
   const loading = useSelector(
     (state) => state?.authReducer?.loading
   );
@@ -33,7 +31,6 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 🔥 Basic validation
     if (!data.email || !data.password) {
       alert("Please fill all required fields");
       return;
@@ -48,11 +45,12 @@ const Auth = () => {
       const { confirmpass, ...cleanData } = data;
       dispatch(signUp(cleanData));
     } else {
-      const loginData = {
-        email: data.email,
-        password: data.password,
-      };
-      dispatch(logIn(loginData));
+      dispatch(
+        logIn({
+          email: data.email,
+          password: data.password,
+        })
+      );
     }
   };
 
@@ -72,9 +70,10 @@ const Auth = () => {
     <div className="Auth">
       <div className="auth-container">
 
-        {/* 🔹 Top Section */}
+        {/* 🔹 Left Section */}
         <div className="auth-left">
-          <img src={Logo} alt="logo" />
+          {/* ✅ FIXED: using public folder image */}
+          <img src="/logo.png" alt="logo" />
           <h2>Welcome!</h2>
           <p>Explore ideas throughout the world.</p>
         </div>
@@ -158,7 +157,6 @@ const Auth = () => {
             onClick={() => {
               setIsSignUp((prev) => !prev);
               resetForm();
-              setConfirmPass(true);
             }}
           >
             {isSignUp

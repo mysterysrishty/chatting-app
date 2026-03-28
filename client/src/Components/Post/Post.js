@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import './Post.css';
-import Comment from '../../Img/comment.png';
-import Share from '../../Img/share.png';
-import Like from '../../Img/like.png';
-import Notlike from '../../Img/notlike.png';
 import { useSelector } from 'react-redux';
 import { likePost } from '../../api/PostRequest';
 
@@ -29,11 +25,11 @@ const Post = ({ data }) => {
   return (
     <div className="Post">
 
-      {/* 🔹 TOP SECTION (PROFILE + NAME) */}
+      {/* 🔹 TOP */}
       <div className="postTop">
         <div className="postTopLeft">
           <img
-            src={serverPublic + "defaultProfile.png"}
+            src="/defaultProfile.png"  // ✅ FIXED
             alt=""
             className="postProfileImg"
           />
@@ -41,14 +37,14 @@ const Post = ({ data }) => {
         </div>
       </div>
 
-      {/* 🔹 IMAGE */}
+      {/* 🔹 POST IMAGE */}
       {data?.image && (
         <img
           src={serverPublic + data.image}
           alt="post"
           className="postImg"
           onError={(e) => {
-            e.target.src = serverPublic + "defaultPost.jpg";
+            e.target.src = "/defaultPost.jpg"; // ✅ FIXED
           }}
         />
       )}
@@ -56,12 +52,12 @@ const Post = ({ data }) => {
       {/* 🔹 ACTIONS */}
       <div className="postActions">
         <img
-          src={liked ? Like : Notlike}
+          src={liked ? "/like.png" : "/notlike.png"} // ✅ FIXED
           alt="like"
           onClick={handleLike}
         />
-        <img src={Comment} alt="comment" />
-        <img src={Share} alt="share" />
+        <img src="/comment.png" alt="comment" />   {/* ✅ FIXED */}
+        <img src="/share.png" alt="share" />       {/* ✅ FIXED */}
       </div>
 
       {/* 🔹 LIKES */}

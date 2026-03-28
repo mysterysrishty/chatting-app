@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import './RightSide.css';
-import Home from '../../Img/home.png';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Noti from '../../Img/noti.png';
-import Comment from '../../Img/comment.png';
 import TrendCard from '../TrendCard/TrendCard';
 import ShareModal from '../ShareModal/ShareModal';
 import { Link } from 'react-router-dom';
@@ -17,12 +14,13 @@ const RightSide = () => {
       {/* 🔝 Navigation Icons */}
       <div className="navIcons">
         <Link to="/home">
-          <img src={Home} alt="home" />
+          <img src="/home.png" alt="home" />
         </Link>
 
         <SettingsOutlinedIcon className="icon" />
-        <img src={Noti} alt="notifications" />
-        <img src={Comment} alt="comments" />
+
+        <img src="/noti.png" alt="notifications" />
+        <img src="/comment.png" alt="comments" />
       </div>
 
       {/* 🔥 Trends */}

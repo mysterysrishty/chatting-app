@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './LogoSearch.css';
-import Logo from '../../Img/logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 
 const LogoSearch = () => {
@@ -8,7 +7,6 @@ const LogoSearch = () => {
 
   const handleSearch = () => {
     console.log("Search:", query);
-    // later you can connect API here
   };
 
   return (
@@ -16,7 +14,8 @@ const LogoSearch = () => {
 
       {/* Logo + Name */}
       <div className="brand">
-        <img src={Logo} alt="logo" />
+        {/* ✅ FIXED: using public folder */}
+        <img src="/logo.png" alt="logo" />
         <span>Srishty Social</span>
       </div>
 
