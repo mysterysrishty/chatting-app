@@ -18,7 +18,7 @@ const PostShare = () => {
   const desc = useRef();
 
   // ✅ FIXED backend URL
-  const serverPublic = "https://your-backend-url/uploads/";
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   // 📸 Handle Image Selection
   const onImageChange = (e) => {
