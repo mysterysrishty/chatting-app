@@ -1,17 +1,37 @@
 import mongoose from "mongoose";
 
-const postSchema = mongoose.Schema(
-    {
-        userId: { type: String, required: true },
-        desc: String,
-        likes: [],
-        image: String
+const postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: true
     },
-    {
-        timestamps: true,
+
+    desc: {
+      type: String,
+      maxLength: 500,
+      default: ""
+    },
+
+    // ✅ FIXED image field
+    image: {
+      type: String,
+      default: ""
+    },
+
+    // ✅ Better likes system
+    likes: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Users",
+      default: []
     }
-)
+  },
+  {
+    timestamps: true
+  }
+);
 
-const postModel = mongoose.model("Posts", postSchema);
+const PostModel = mongoose.model("Posts", postSchema);
 
-export default postModel
+export default PostModel;
