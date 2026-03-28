@@ -87,16 +87,9 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.log("MongoDB error ❌", error);
   });
-  dotenv.config();
-
-if (!process.env.MONGO_URI) {
-  console.error("❌ MONGO_URI is missing");
-  process.exit(1);
-}
-
-mongoose.connect(process.env.MONGO_URI)
   
-  console.log("Mongo URI:", process.env.MONGO_URI);
+
+
   
   
  
