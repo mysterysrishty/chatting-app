@@ -15,7 +15,7 @@ const LogoSearch = () => {
       {/* Logo + Name */}
       <div className="brand">
         {/* ✅ FIXED: using public folder */}
-        <img src="/logo.png" alt="logo" />
+        <img src="/Img/logo.png" alt="logo" />
         <span>Srishty Social</span>
       </div>
 

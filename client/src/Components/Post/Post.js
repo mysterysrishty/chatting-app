@@ -29,7 +29,7 @@ const Post = ({ data }) => {
       <div className="postTop">
         <div className="postTopLeft">
           <img
-            src="/defaultProfile.png"  // ✅ FIXED
+            src="/Img/defaultProfile.png"  // ✅ FIXED
             alt=""
             className="postProfileImg"
           />
@@ -44,7 +44,7 @@ const Post = ({ data }) => {
           alt="post"
           className="postImg"
           onError={(e) => {
-            e.target.src = "/defaultPost.jpg"; // ✅ FIXED
+            e.target.src = "/Img/defaultPost.jpg"; // ✅ FIXED
           }}
         />
       )}
@@ -52,12 +52,12 @@ const Post = ({ data }) => {
       {/* 🔹 ACTIONS */}
       <div className="postActions">
         <img
-          src={liked ? "/like.png" : "/notlike.png"} // ✅ FIXED
+          src={liked ? "/Img/like.png" : "/Img/notlike.png"} // ✅ FIXED
           alt="like"
           onClick={handleLike}
         />
-        <img src="/comment.png" alt="comment" />   {/* ✅ FIXED */}
-        <img src="/share.png" alt="share" />       {/* ✅ FIXED */}
+        <img src="/Img/comment.png" alt="comment" />   {/* ✅ FIXED */}
+        <img src="/Img/share.png" alt="share" />       {/* ✅ FIXED */}
       </div>
 
       {/* 🔹 LIKES */}

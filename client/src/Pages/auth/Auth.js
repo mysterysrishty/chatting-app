@@ -73,7 +73,7 @@ const Auth = () => {
         {/* 🔹 Left Section */}
         <div className="auth-left">
           {/* ✅ FIXED: using public folder image */}
-          <img src="/logo.png" alt="logo" />
+          <img src="/Img/logo.png" alt="logo" />
           <h2>Welcome!</h2>
           <p>Explore ideas throughout the world.</p>
         </div>

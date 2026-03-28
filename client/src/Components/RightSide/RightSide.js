@@ -14,13 +14,13 @@ const RightSide = () => {
       {/* 🔝 Navigation Icons */}
       <div className="navIcons">
         <Link to="/home">
-          <img src="/home.png" alt="home" />
+          <img src="/Img/home.png" alt="home" />
         </Link>
 
         <SettingsOutlinedIcon className="icon" />
 
-        <img src="/noti.png" alt="notifications" />
-        <img src="/comment.png" alt="comments" />
+        <img src="/Img/noti.png" alt="notifications" />
+        <img src="/Img/comment.png" alt="comments" />
       </div>
 
       {/* 🔥 Trends */}
