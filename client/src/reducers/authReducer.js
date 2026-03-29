@@ -1,64 +1,100 @@
-const authReducer = (
-    state = { authData: null, loading: false, error: false, updateLoadng: false },
-    action
-) => {
-    switch (action.type) {
-        case "AUTH_START":
-            return { ...state, loading: true, error: false };
+const initialState = {
+  authData: JSON.parse(localStorage.getItem("profile")), // ✅ FIX
+  loading: false,
+  error: false,
+  updateLoadng: false,
+};
 
-        case "AUTH_SUCCESS":
-            localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
-            return { ...state, authData: action.data, loading: false, error: false };
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
 
-        case "AUTH_FAIL":
-            return { ...state, loading: false, error: true };
+    case "AUTH_START":
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
 
-        case "UPDATING_START":
-            return { ...state, updateLoadng: true, error: false };
+    case "AUTH_SUCCESS":
+      localStorage.setItem("profile", JSON.stringify(action.data));
+      return {
+        ...state,
+        authData: action.data,
+        loading: false,   // ✅ important
+        error: false,
+      };
 
-        case "UPDATING_SUCCESS":
-            localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
-            return { ...state, authData: action.data, updateLoadng: false, error: false };
+    case "AUTH_FAIL":
+      return {
+        ...state,
+        loading: false,   // ✅ important
+        error: true,
+      };
 
-        case "UPDATING_FAIL":
-            return { ...state, updateLoadng: false, error: true };
+    case "UPDATING_START":
+      return {
+        ...state,
+        updateLoadng: true,
+        error: false,
+      };
 
-        case "FOLLOW_USER":
-            return {
-                ...state,
-                authData: {
-                    ...state.authData,
-                    user: {
-                        ...state.authData.user,
-                        following: [
-                            ...state.authData.user.following,
-                            action.data
-                        ]
-                    }
-                }
-            };
+    case "UPDATING_SUCCESS":
+      localStorage.setItem("profile", JSON.stringify(action.data));
+      return {
+        ...state,
+        authData: action.data,
+        updateLoadng: false,
+        error: false,
+      };
 
-        case "UNFOLLOW_USER":
-            return {
-                ...state,
-                authData: {
-                    ...state.authData,
-                    user: {
-                        ...state.authData.user,
-                        following: state.authData.user.following.filter(
-                            (personId) => personId !== action.data
-                        )
-                    }
-                }
-            };
+    case "UPDATING_FAIL":
+      return {
+        ...state,
+        updateLoadng: false,
+        error: true,
+      };
 
-        case "LOG_OUT":
-            localStorage.clear();
-            return { ...state, authData: null, loading: false, error: false };
+    case "FOLLOW_USER":
+      return {
+        ...state,
+        authData: {
+          ...state.authData,
+          user: {
+            ...state.authData.user,
+            following: [
+              ...state.authData.user.following,
+              action.data,
+            ],
+          },
+        },
+      };
 
-        default:
-            return state;
-    }
+    case "UNFOLLOW_USER":
+      return {
+        ...state,
+        authData: {
+          ...state.authData,
+          user: {
+            ...state.authData.user,
+            following: state.authData.user.following.filter(
+              (id) => id !== action.data
+            ),
+          },
+        },
+      };
+
+    case "LOG_OUT":
+      localStorage.clear();
+      return {
+        ...state,
+        authData: null,
+        loading: false,
+        error: false,
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default authReducer;
