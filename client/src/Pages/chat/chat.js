@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import socket from "../../socket";
-import "./Chat.css";
+import "./chat.css";
 import Message from "../../components/Message/Message";
 import { getUserChats } from "../../api/ChatRequest";
 import { getMessages, addMessage } from "../../api/MessageRequest";
