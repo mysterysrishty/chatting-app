@@ -1,21 +1,20 @@
 import * as UploadApi from "../api/UploadRequest";
 
-// 📸 Upload Image
-export const uploadImage = (data) => async (dispatch) => {
+// 📸 Upload Image (Cloudinary)
+export const uploadImage = (image) => async (dispatch) => {
   try {
-    const res = await UploadApi.uploadImage(data);
+    const res = await UploadApi.uploadImage(image);
 
-    // optional: you can dispatch if needed later
-    // dispatch({ type: "UPLOAD_IMAGE_SUCCESS", data: res.data });
+    // ✅ return only URL (clean)
+    return res.data.url;
 
-    return res.data; // ✅ return for chaining
   } catch (error) {
-    console.error("Image upload error:", error);
+    console.error("❌ Image upload error:", error?.response?.data || error.message);
 
-    // optional: dispatch error
+    // optional dispatch
     // dispatch({ type: "UPLOAD_IMAGE_FAIL" });
 
-    throw error; // ✅ important
+    throw error;
   }
 };
 
@@ -31,12 +30,13 @@ export const uploadPost = (data) => async (dispatch) => {
       data: res.data,
     });
 
-    return res.data; // ✅ return for chaining
+    return res.data;
+
   } catch (error) {
-    console.error("Post upload error:", error);
+    console.error("❌ Post upload error:", error?.response?.data || error.message);
 
     dispatch({ type: "UPLOAD_FAIL" });
 
-    throw error; // ✅ important
+    throw error;
   }
 };

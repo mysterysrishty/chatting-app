@@ -1,0 +1,32 @@
+.Chat {
+  display: flex;
+  height: 100vh;
+}
+
+.chatMenu {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
+
+.chatItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chatBox {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatMessages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chatInput {
+  display: flex;
+  padding: 10px;
+}
