@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import socket from "../../socket";
 import "./chat.css";
-import Message from "../../components/Message/Message";
+import Message from "../../Components/Message/Message";
 import { getUserChats } from "../../api/ChatRequest";
 import { getMessages, addMessage } from "../../api/MessageRequest";
 import { useSelector } from "react-redux";
