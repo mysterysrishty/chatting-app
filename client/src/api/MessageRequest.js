@@ -1,12 +1,8 @@
-import React from "react";
-import "./Components/Message/Message.css";
+import axios from "axios";
 
-const Message = ({ message, own }) => {
-  return (
-    <div className={own ? "message own" : "message"}>
-      <span>{message.text}</span>
-    </div>
-  );
-};
+const API = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
-export default Message;
+export const addMessage = (data) => API.post("/message", data);
+export const getMessages = (id) => API.get(`/message/${id}`);
